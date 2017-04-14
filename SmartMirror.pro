@@ -15,12 +15,15 @@ SOURCES += main.cpp\
         mirror_main.cpp \
     weather/darksky_weather.cpp \
     weather/weather.cpp \
-    weather/openweathermap_weather.cpp
+    weather/openweathermap_weather.cpp \
+    settings.cpp
 
 HEADERS  += mirror_main.h \
     weather/darksky_weather.h \
     weather/weather.h \
-    weather/openweathermap_weather.h
+    weather/openweathermap_weather.h \
+    settings.h \
+    config.h
 
 FORMS    += mirror_main.ui
 

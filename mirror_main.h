@@ -11,6 +11,10 @@
 #include <QGeoPositionInfoSource>
 #include <QDebug>
 
+#include <QFontDatabase>
+
+#include "settings.h"
+
 namespace Ui {
 class mirror_main;
 }
@@ -40,6 +44,11 @@ private:
     QGeoPositionInfoSource* m_pLocationInfo;
 
     QList<QWidget*> widget_list;
+
+    QFont nanumgothic;
+    QFont nanummyeongjo;
+
+    settings *set = new settings;
 };
 
 #endif // MIRROR_MAIN_H

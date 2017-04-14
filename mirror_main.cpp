@@ -7,6 +7,10 @@ mirror_main::mirror_main(QWidget *parent) :
     ui(new Ui::mirror_main)
 {
     ui->setupUi(this);
+
+    if(set->isClear())
+        set->defaultSetup();
+
     gui_Init();
 }
 
@@ -18,6 +22,21 @@ mirror_main::~mirror_main()
 void mirror_main::gui_Init()
 {
     // start location weather
+    //showFullScreen();
+
+    /* NanumGothic */
+
+    int nanumgothic_id = QFontDatabase::addApplicationFont(":/fonts/Resources/NanumGothic.otf");
+    QString nanumgothic_family = QFontDatabase::applicationFontFamilies(nanumgothic_id).at(0);
+    nanumgothic = QFont(nanumgothic_family);
+
+    /* NanumMyeongjo */
+
+    int nanummyeongjo_id = QFontDatabase::addApplicationFont(":/fonts/Resources/NanumMyeongjo.otf");
+    QString nanummyeongjo_family = QFontDatabase::applicationFontFamilies(nanummyeongjo_id).at(0);
+    nanummyeongjo = QFont(nanummyeongjo_family);
+
+    //qDebug() << m_pLocationInfo;
     startLocationAPI();
 }
 
@@ -39,8 +58,9 @@ void mirror_main::resizeEvent(QResizeEvent *event)
     // Welcome Label
 
     QLabel *msg_hello = new QLabel(widget_main);
-    msg_hello->setText("World will live as one");
+    msg_hello->setText("\"" + set->getUserComment() + "\"");
     msg_hello->setStyleSheet("font: 50px;");
+    msg_hello->setFont(nanummyeongjo);
     msg_hello->move(msg_hello->x(),((height() / 2) - msg_hello->height()) / 1.25);
     msg_hello->resize(width(), msg_hello->height() * 2);
     msg_hello->setAlignment(Qt::AlignCenter);
