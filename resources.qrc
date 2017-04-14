@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/fonts"/>
+    <qresource prefix="/weather">
+        <file>Resources/Cloud-thin.png</file>
+        <file>Resources/Cloud.png</file>
+        <file>Resources/Hail-thin.png</file>
+        <file>Resources/Hail.png</file>
+        <file>Resources/Haze-thin.png</file>
+        <file>Resources/Haze.png</file>
+        <file>Resources/Moon-thin.png</file>
+        <file>Resources/Moon.png</file>
+        <file>Resources/PartlyMoon-thin.png</file>
+        <file>Resources/PartlyMoon.png</file>
+        <file>Resources/PartlySunny-thin.png</file>
+        <file>Resources/PartlySunny.png</file>
+        <file>Resources/Rain-thin.png</file>
+        <file>Resources/Rain.png</file>
+        <file>Resources/Snow-thin.png</file>
+        <file>Resources/Snow.png</file>
+        <file>Resources/Storm-thin.png</file>
+        <file>Resources/Storm.png</file>
+        <file>Resources/Sun-thin.png</file>
+        <file>Resources/Sun.png</file>
+        <file>Resources/Sunrise-thin.png</file>
+        <file>Resources/Sunrise.png</file>
+        <file>Resources/Tornado-thin.png</file>
+        <file>Resources/Tornado.png</file>
+    </qresource>
+</RCC>
