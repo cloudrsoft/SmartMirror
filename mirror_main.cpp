@@ -11,7 +11,7 @@ mirror_main::mirror_main(QWidget *parent) :
     if(set->isClear())
         set->defaultSetup();
 
-    gui_Init();
+    initUI();
 }
 
 mirror_main::~mirror_main()
@@ -19,10 +19,9 @@ mirror_main::~mirror_main()
     delete ui;
 }
 
-void mirror_main::gui_Init()
+void mirror_main::initUI()
 {
-    // start location weather
-    //showFullScreen();
+    /* Load Fonts */
 
     /* NanumGothic */
 
@@ -30,55 +29,105 @@ void mirror_main::gui_Init()
     QString nanumgothic_family = QFontDatabase::applicationFontFamilies(nanumgothic_id).at(0);
     nanumgothic = QFont(nanumgothic_family);
 
+    setFont(nanumgothic);
+
     /* NanumMyeongjo */
 
     int nanummyeongjo_id = QFontDatabase::addApplicationFont(":/fonts/Resources/NanumMyeongjo.otf");
     QString nanummyeongjo_family = QFontDatabase::applicationFontFamilies(nanummyeongjo_id).at(0);
     nanummyeongjo = QFont(nanummyeongjo_family);
 
-    //qDebug() << m_pLocationInfo;
-    startLocationAPI();
-}
+    /* End Load Fonts */
 
-void mirror_main::resizeEvent(QResizeEvent *event)
-{
+    /* Initialization UI */
+
     if(!widget_list.isEmpty())
     {
         delete widget_list.first();
     }
 
-    // Widget
-
-    QWidget *widget_main = new QWidget(this);
-    widget_main->resize(size());
+    widget_main = new QWidget(this);
     widget_main->show();
     widget_list.clear();
     widget_list.append(widget_main);
 
-    // Welcome Label
-
-    QLabel *msg_hello = new QLabel(widget_main);
+    msg_hello = new QLabel(widget_main);
     msg_hello->setText("\"" + set->getUserComment() + "\"");
     msg_hello->setStyleSheet("font: 50px;");
     msg_hello->setFont(nanummyeongjo);
-    msg_hello->move(msg_hello->x(),((height() / 2) - msg_hello->height()) / 1.25);
-    msg_hello->resize(width(), msg_hello->height() * 2);
     msg_hello->setAlignment(Qt::AlignCenter);
     msg_hello->show();
+
+    msg_stt = new QLabel(widget_main);
+    msg_stt->setText("Say Hello GUI");
+    msg_stt->setStyleSheet("font: 20px;");
+    msg_stt->setAlignment(Qt::AlignCenter);
+    msg_stt->show();
+
+    msg_time = new QLabel(widget_main);
+    msg_time->setText("1월 1일 (월) 00:00 AM");
+    msg_time->setStyleSheet("font: 50px;");
+    msg_time->show();
+
+    weather_widget = new QWidget(widget_main);
+    weather_widget->setStyleSheet("image: url(:/weather/Resources/weather-sunny.png);");
+    weather_widget->show();
+
+    msg_weather_location = new QLabel(widget_main);
+    msg_weather_location->setText("Seoul");
+    msg_weather_location->setStyleSheet("font: 50px;");
+    msg_weather_location->setAlignment(Qt::AlignCenter);
+    msg_weather_location->show();
+
+    /* End Initialization UI */
+
+    /* Start LocationAPI */
+
+    startLocationAPI();
+
+    refreshUI();
+}
+
+void mirror_main::refreshUI()
+{
+    // Widget
+
+    widget_main->resize(size());
+
+    // Welcome Label
+
+    msg_hello->move(msg_hello->x(),((height() / 2) - msg_hello->height()) / 1.25);
+    msg_hello->resize(width(), msg_hello->height());
 
     // End
 
     // SST Label
 
-    QLabel *msg_stt = new QLabel(widget_main);
-    msg_stt->setText("Say Hello GUI");
-    msg_stt->setStyleSheet("font: 20px;");
     msg_stt->move(msg_stt->x(),(height() / 2) - msg_stt->height());
-    msg_stt->resize(width(), msg_stt->height() * 2);
-    msg_stt->setAlignment(Qt::AlignCenter);
-    msg_stt->show();
+    msg_stt->resize(width(), msg_stt->height());
+
+    msg_time->move(width() - msg_time->width(), 0);
+    msg_time->resize(labelRefreshSize(msg_time->text().size(), msg_time->font()));
+
+    // Weather Widget
+
+    weather_widget->resize(width() / 7, width() / 7);
+    weather_widget->move((width() / 20) / 1.5, (weather_widget->height() / 3) / 1.5);
+
+    msg_weather_location->move((((width() / 20) / 1.5) + weather_widget->width()) * 1.25, weather_widget->height() / 3);
+    msg_weather_location->resize(labelRefreshSize(msg_weather_location->text().size(), msg_weather_location->font()));
 
     // End
+}
+
+QSize mirror_main::labelRefreshSize(int size, QFont font)
+{
+    return QSize(size * (font.pixelSize() / 1.95), font.pixelSize());
+}
+
+void mirror_main::resizeEvent(QResizeEvent *event)
+{
+    refreshUI();
 }
 
 void mirror_main::startLocationAPI()

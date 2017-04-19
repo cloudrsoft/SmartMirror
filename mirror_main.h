@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QLabel>
-#include <QWidget>
+#include <QtWidgets>
 #include <QList>
 #include <QDesktopWidget>
 #include <QResizeEvent>
@@ -28,13 +28,17 @@ public:
     ~mirror_main();
 
 private slots:
-    void gui_Init();
+    void initUI(); // initUI
+
+    void refreshUI(); // refreshUI
 
     void resizeEvent(QResizeEvent* event);
 
     void positionUpdated(QGeoPositionInfo geoPositionInfo);
 
     void startLocationAPI();
+
+    QSize labelRefreshSize(int size, QFont font);
 
     QList<QString> getWeather(int latitude, int longitude);
 
@@ -47,6 +51,18 @@ private:
 
     QFont nanumgothic;
     QFont nanummyeongjo;
+
+    /* Widgets */
+
+    QWidget *widget_main;
+    QLabel *msg_hello; // Welcome Label
+    QLabel *msg_stt; // STT Label
+    QLabel *msg_time; // Time Label
+
+    // Weather
+
+    QLabel *msg_weather_location; // Weather Temp Label
+    QWidget *weather_widget; // Weather Widget
 
     settings *set = new settings;
 };
